@@ -46,47 +46,5 @@ class RolesGroupsSeeder extends Seeder
             'created_at' => now(),
             'updated_at' => now()
         ]);
-        RoleGroup::updateOrCreate(['id' => 6], [
-            'name'       => 'Clientes',
-            'icon'       => 'fas fa-users',
-            'created_at' => now(),
-            'updated_at' => now()
-        ]);
-        RoleGroup::updateOrCreate(['id' => 7], [
-            'name'       => 'Unidades',
-            'icon'       => 'fas fa-building',
-            'created_at' => now(),
-            'updated_at' => now()
-        ]);
-        RoleGroup::updateOrCreate(['id' => 8], [
-            'name'       => 'Ambientes',
-            'icon'       => 'fas fa-couch',
-            'created_at' => now(),
-            'updated_at' => now()
-        ]);
-        RoleGroup::updateOrCreate(['id' => 9], [
-            'name'       => 'Equipamentos',
-            'icon'       => 'fas fa-fire-extinguisher',
-            'created_at' => now(),
-            'updated_at' => now()
-        ]);
-        RoleGroup::updateOrCreate(['id' => 10], [
-            'name'       => 'Cargos',
-            'icon'       => 'fas fa-people-carry',
-            'created_at' => now(),
-            'updated_at' => now()
-        ]);
-        RoleGroup::updateOrCreate(['id' => 11], [
-            'name'       => 'Colaboradores',
-            'icon'       => 'fas fa-user-md',
-            'created_at' => now(),
-            'updated_at' => now()
-        ]);
-        RoleGroup::updateOrCreate(['id' => 12], [
-            'name'       => 'Manutenção',
-            'icon'       => 'fas fa-wrench',
-            'created_at' => now(),
-            'updated_at' => now()
-        ]);
     }
 }
