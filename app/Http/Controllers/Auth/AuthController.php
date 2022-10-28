@@ -3,19 +3,17 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Models\Auth\PasswordReset;
+use App\Models\Logs;
 use App\Models\Management\Permission;
 use App\Models\User\User;
-use App\Notifications\Auth\SendEmailResetPassword;
 use Illuminate\Http\Request;
-use Illuminate\Notifications\Notifiable;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth:api', ['except' => ['create', 'login', 'unauthorized']]);
+        $this->middleware('auth:api', ['except' => ['create', 'login', 'register', 'unauthorized']]);
     }
 
     public function login(Request $request)
@@ -27,8 +25,33 @@ class AuthController extends Controller
             return response()->json(['error' => 'Usuário e/ou senha inválidos']);
         }
 
-        $permissions = Permission::getPermissionsLoggedUser()->pluck('route')->toArray();
-        return response()->json(['error' => '', 'token' => $token, 'user' => $user, 'permissions' => $permissions]);
+        Logs::create([
+            'user_id' => $user->id,
+            'ip'      => request()->ip()
+        ]);
+
+        return response()->json(['error' => '', 'token' => $token, 'user' => $user]);
+    }
+
+    public function register(Request $request)
+    {
+        $data = $request->except('token');
+        $data['password'] = Hash::make($request->password);
+        User::create($data);
+
+        $credentials = $request->only('email', 'password');
+        $token       = auth()->attempt($credentials);
+        $user        = auth()->user();
+        if(!$token){
+            return response()->json(['error' => 'Usuário e/ou senha inválidos']);
+        }
+
+        Logs::create([
+            'user_id' => $user->id,
+            'ip'      => request()->ip()
+        ]);
+
+        return response()->json(['error' => '', 'token' => $token, 'user' => $user]);
     }
 
     public function logout()

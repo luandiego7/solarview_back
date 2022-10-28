@@ -25,10 +25,8 @@ class SaveRequest extends FormRequest
     public function rules()
     {
         return [
-            'company_id' => ['nullable', 'alpha_num'],
-            'role_id'    => ['nullable'],
-            'name'       => ['required', 'min:5', 'max:100', 'alpha_digit_number'],
-            'email'      => ['required', 'min:10', 'max:100', 'email', Rule::unique('users', 'email')->ignore($this->id)],
+            'name'  => ['required', 'min:5', 'max:100', 'alpha_digit_number'],
+            'email' => ['required', 'min:10', 'max:100', 'email', Rule::unique('users', 'email')->ignore($this->id)],
         ];
     }
 }

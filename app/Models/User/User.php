@@ -3,6 +3,7 @@
 namespace App\Models\User;
 
 use App\Models\City;
+use App\Models\Logs;
 use App\Models\Management\CompanyUser;
 use App\Models\Management\RoleUser;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -38,28 +39,14 @@ class User extends Authenticatable implements JWTSubject
         return $this->superadmin == 1;
     }
 
-    public function getCity()
+    public function getLogs()
     {
-        return $this->hasOne(City::class, 'id', 'city_id')->with(['getState']);
-    }
-
-    public function getCompanyUser()
-    {
-        return $this->hasOne(CompanyUser::class, 'user_id', 'id')->with(['getCompany']);
-    }
-
-    public function getRoles()
-    {
-        return $this->hasMany(RoleUser::class, 'user_id', 'id');
-    }
-
-    static function getPhoto(){
-
+        return $this->hasMany(Logs::class, 'user_id', 'id');
     }
 
     static function getUsers($request = [])
     {
-        $user = User::with(['getCity', 'getCompanyUser', 'getRoles']);
+        $user = User::with([]);
 
         if(isset($request['id']) && $request['id'] !== ''){
             $user->where('id', $request['id']);

@@ -15,9 +15,6 @@ class CreateUsersTable extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('city_id')->nullable()->constrained();
-            $table->tinyInteger('profile');
-            $table->tinyInteger('superadmin')->default(0);
             $table->string('name',100);
             $table->string('email', 100)->unique();
             $table->string('cpf', 14)->unique()->nullable();

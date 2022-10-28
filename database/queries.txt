@@ -1,0 +1,7 @@
+Dashboard
+
+select DATE_FORMAT(logs.created_at, '%H') as hour, count(logs.user_id) as qtd from `logs` inner join `users` on `users`.`id` = `logs`.`user_id` group by `hour` order by `hour` asc;
+
+Últimos logs
+
+select * from `logs` order by `created_at` desc limit 5
